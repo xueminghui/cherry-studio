@@ -263,6 +263,8 @@ export default class OpenAIProvider extends BaseProvider {
 
   public async models(): Promise<OpenAI.Models.Model[]> {
     try {
+      const response = await this.sdk.models.list()
+
       if (this.provider.id === 'github') {
         // @ts-ignore key is not typed
         return response.body.map((model) => ({
@@ -273,7 +275,6 @@ export default class OpenAIProvider extends BaseProvider {
         }))
       }
 
-      const response = await this.sdk.models.list()
       return response.data
     } catch (error) {
       return []
